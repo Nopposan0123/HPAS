@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hazard prediction assist sysytem</title>
+    <link rel="Stylesheet" href="Hazard prediction assist system.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <style>
+      canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+  <header class="header">
+      <div class="header-logo">Hazard prediction assist system</div>
+
+   
+  <form name="form">
+    <div class="process-work">
+        <h2>工程</h2>
+        <select id="process">
+            <option value="0">樹脂・再生</option>
+            <option value="1">紡糸・成膜・エンボス</option>
+            <option value="2">検査・保全室</option>
+            <option value="3">スリット</option>
+            <option value="4">玉上げ・包装</option>
+            <option value="5">倉庫・運搬</option>
+            <option value="6">事務・その他</option>
+        </select>
+    </div>
+
+    <div class="process-work">
+        <h2>作業1</h2>
+        <select id="work1", name="select2">
+            <option value="0">回転体近くでの作業</option>
+            <option value="1">重量物の設置・移動</option>
+            <option value="2">清掃作業</option>
+            <option value="3">狭所での作業</option>
+            <option value="4">動機器作動中の作業</option>
+            <option value="5">刃物での作業</option>
+            <option value="6">刃物の設置・移動</option>
+            <option value="7">刃物近くでの作業</option>
+            <option value="8">歩行</option>
+            <option value="9">階段昇降</option>
+            <option value="10">工具を使った作業</option>
+            <option value="11">高所作業</option>
+            <option value="12">サンダーによる作業</option>
+            <option value="13">設備の点検</option>
+            <option value="14">電源の差し込み</option>
+            <option value="15">ドアの開閉</option>
+            <option value="16">配管作業</option>
+            <option value="17">リフトでの作業</option>
+            <option value="18">ホース引き抜き</option>
+            <option value="19">高温物近くでの作業</option>
+        </select>
+      </div>
+    
+      <div class="process-work">
+        <h2>作業2</h2>
+        <select id="work2", name="select3">
+            <option value="0">回転体近くでの作業</option>
+            <option value="1">重量物の設置・移動</option>
+            <option value="2">清掃作業</option>
+            <option value="3">狭所での作業</option>
+            <option value="4">動機器作動中の作業</option>
+            <option value="5">刃物での作業</option>
+            <option value="6">刃物の設置・移動</option>
+            <option value="7">刃物近くでの作業</option>
+            <option value="8">歩行</option>
+            <option value="9">階段昇降</option>
+            <option value="10">工具を使った作業</option>
+            <option value="11">高所作業</option>
+            <option value="12">サンダーによる作業</option>
+            <option value="13">設備の点検</option>
+            <option value="14">電源の差し込み</option>
+            <option value="15">ドアの開閉</option>
+            <option value="16">配管作業</option>
+            <option value="17">リフトでの作業</option>
+            <option value="18">ホース引き抜き</option>
+            <option value="19">高温物近くでの作業</option>
+        </select>
+      </div> 
+
+      <div class="process-work">
+        <h2>チェック開始</h2>
+        <input id="button" type="button" value="Start">
+      </div>  
+  </form>   
+  </header>
+
+   <div class="main">
+      <div class="copy-container">
+        <h1>意識に関するチェック</h1>
+          <ol>
+            <p id="no_thinking">無考</p>
+             <input name="radio1" type="radio" value="1" checked> 違う:1
+             <input name="radio1" type="radio" value="2"> :2
+             <input name="radio1" type="radio" value="3"> :3
+             <input name="radio1" type="radio" value="4"> :4
+             <input name="radio1" type="radio" value="5"> :5 その通り
+            <p id="reckless">無謀</p>
+             <input name="radio2" type="radio" value="1" checked> 違う:1
+             <input name="radio2" type="radio" value="2"> :2
+             <input name="radio2" type="radio" value="3"> :3
+             <input name="radio2" type="radio" value="4"> :4
+             <input name="radio2" type="radio" value="5"> :5 その通り
+            <p id="ignore">無視</p>
+             <input name="radio3" type="radio" value="1" checked> 違う:1
+             <input name="radio3" type="radio" value="2"> :2
+             <input name="radio3" type="radio" value="3"> :3
+             <input name="radio3" type="radio" value="4"> :4
+             <input name="radio3" type="radio" value="5"> :5 その通り
+            <p id="no_awareness">無自覚</p>
+             <input name="radio4" type="radio" value="1" checked> 違う:1
+             <input name="radio4" type="radio" value="2"> :2
+             <input name="radio4" type="radio" value="3"> :3
+             <input name="radio4" type="radio" value="4"> :4
+             <input name="radio4" type="radio" value="5"> :5 その通り
+            <p id="lack_of_knowledge">無知</p>
+             <input name="radio5" type="radio" value="1" checked> 違う:1
+             <input name="radio5" type="radio" value="2"> :2
+             <input name="radio5" type="radio" value="3"> :3
+             <input name="radio5" type="radio" value="4"> :4
+             <input name="radio5" type="radio" value="5"> :5 その通り
+            <p id="no_consciousness">無意識</p>
+             <input name="radio6" type="radio" value="1" checked> 違う:1
+             <input name="radio6" type="radio" value="2"> :2
+             <input name="radio6" type="radio" value="3"> :3
+             <input name="radio6" type="radio" value="4"> :4
+             <input name="radio6" type="radio" value="5"> :5 その通り
+            <p id="insensitive">無神経</p>
+             <input name="radio7" type="radio" value="1" checked> 違う:1
+             <input name="radio7" type="radio" value="2"> :2
+             <input name="radio7" type="radio" value="3"> :3
+             <input name="radio7" type="radio" value="4"> :4
+             <input name="radio7" type="radio" value="5"> :5 その通り
+            <p id="lack_of_interest">無関心</p>
+             <input name="radio8" type="radio" value="1" checked> 違う:1
+             <input name="radio8" type="radio" value="2"> :2
+             <input name="radio8" type="radio" value="3"> :3
+             <input name="radio8" type="radio" value="4"> :4
+             <input name="radio8" type="radio" value="5"> :5 その通り
+            <p id="without_permission">無許可</p>
+             <input name="radio9" type="radio" value="1" checked> 違う:1
+             <input name="radio9" type="radio" value="2"> :2
+             <input name="radio9" type="radio" value="3"> :3
+             <input name="radio9" type="radio" value="4"> :4
+             <input name="radio9" type="radio" value="5"> :5 その通り
+
+          </ol>
+        <h1>作業に関するチェック</h1>
+          <ul>
+            <p id="work1_check"></p>
+             <input name="radio10" type="radio" value="1" checked> 違う:1
+             <input name="radio10" type="radio" value="2"> :2
+             <input name="radio10" type="radio" value="3"> :3
+             <input name="radio10" type="radio" value="4"> :4
+             <input name="radio10" type="radio" value="5"> :5 その通り
+            <p id="work2_check"></p>
+             <input name="radio11" type="radio" value="1" checked> 違う:1
+             <input name="radio11" type="radio" value="2"> :2
+             <input name="radio11" type="radio" value="3"> :3
+             <input name="radio11" type="radio" value="4"> :4
+             <input name="radio11" type="radio" value="5"> :5 その通り
+          </ul>
+
+        <h1>意識と作業に対するリスク</h1>
+         <div style="width: 600px;">
+          <canvas id="radar-chart"></canvas>
+         </div>
+      </div>
+
+      <div class="contents">
+        <h3 class="section-title">関連労災事例</h3>
+        <div class="contents-item">
+          <img id="photo1" src="reports/00.jpg" 
+           width="300" height="200">
+          <p>事例1</p>
+        </div>
+        <div class="contents-item">
+          <iframe id="text1" src="reports/00.txt" width="250" height="200"></iframe>
+          <p>事例1の概要</p>
+        </div>
+        <div class="contents-item">
+          <img id="photo2" src="reports/01.jpg" 
+           width="300" height="200">
+          <p>事例2</p>
+        </div>
+        <div class="contents-item">
+          <iframe id="text2" src="reports/01.txt" width="250" height="200"></iframe>
+          <p>事例2の概要</p>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3 class="section-title">お問い合わせ</h3>
+        <p>メールアドレス（必須）</p>
+        <!-- <input>要素を追加してください -->
+        <input>
+        
+        <p>お問い合わせ内容（必須）</p>
+        <!-- <textarea>要素を追加してください -->
+        <textarea></textarea>
+        
+        <p>※必須項目は必ずご入力ください</p>
+        <!-- <input>要素を追加してください -->
+        <input class="contact-submit" type="submit" value="送信">
+        
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-logo">KY Athletes</div>
+      <div class="footer-list">
+        <ul>
+          <li>会社概要</li>
+          <li>採用</li>
+          <li>お問い合わせ</li>
+        </ul>
+      </div>
+    </div>
+
+  </body>
+
+  <script>
+  //意識のチェックとKYアドバイス　データ
+   var no_thinking_check=["今日の作業は慣れた作業なので危険は無い","緊急要請を受けている","50cm程の高さでの作業に危険はない",
+    "今日の作業に潜在的な危険はない","今日は急ぎの作業がある","保護メガネをしていれば安全は確保されている","詰まりが発生しても気にならない",
+    "装置更新後の調整作業は注意が散漫になる","装置が予想外の動きをしたとき、咄嗟に製品等に手を出すことがある","終業間際は、手抜きをしてしまう",
+    "玉揚げのタイミング等、時間に追われ焦って作業している"];
+   var no_thinking_advices=["慣れた作業でも操作の見直し・確認せよ","緊急の時こそ、確実に作業手順を遵守せよ","ちょっとした段差にもリスクあり、足場の確認せよ",
+    "普段動かないと思うものが、もし動いたらどうなるか想定して行動せよ","急ぎの時程、一息入れて安全確認せよ","保護メガネ着用時に隙間が無いか確認せよ",
+    "詰まりを放置することにリスクあり、改善できないか相談せよ","装置更新等の変更時は思わぬ危険が潜んでいるので要注意",
+    "装置が予想外の動きをしたときは、落ち着いて装置を停止させて対応せよ","終業まで油断せず、近道行為はしない。指差し呼称して、意識レベルを高めよう",
+    "焦っている時こそ、落ち着いて決まった手順を守ろう"];
+
+   var reckless_check=["今日の作業は早くしなければならない","少し安全を犠牲にしても生産性を上げた方が結果的に良いと思う",
+    "動きを遅くすれば、動機器に手を出しても滅多に災害は起きない","時間や手間をかけるより少し安全に目をつぶって対応する",
+    "現在、緊急要請を受けている","焦って作業をする事が多い","今日、災害に合う事はない","少々分からない事があっても他の人と同じように作業しなければならない",
+    "安全よりも作業効率を上げたい","効率的だが、少々危険はあることを認識して行っている作業がある"];
+   var reckless_advices=["急ぎの時程、一息入れて安全確認せよ","労災が起きると自分だけでなく他の人も不幸になる。安全が最優先を心がけよ",
+    "動きが遅くても人の体を破壊するのに十分な力がある事を認識せよ","安全のための時間や手間は必要な事。近道行為は事故を招く",
+    "緊急の時こそ、確実に作業手順を確認せよ","焦っているときは、周りに相談、無理なく作業を進めよ","自分だけは大丈夫と思う心にリスクあり、今一度、無理な作業をしていないか見直し",
+    "分かったふりが事故を起こす。分からない事は確実に周りに相談せよ","安全最優先、先ず安全確保をせよ","危険の放置は事故を招く、安全を優先し、まず上司に相談しよう"];
+
+   var ignore_check=["今日の作業は、ルール・SOPを守ることができない","安全より生産が優先と考えている",
+    "安全より生産が優先と考えている","効率が良い自分独自の方法で作業できるのでSOPは見る必要がない","複数人で行う作業を一人で行うことがある",
+    "作業手順書が実作業に合っていないので、守っていない","ちょっとしたゴミ等は、設備を停止させずにを除去することがある",
+    "決められた治具・道具を使わないことがある","NTカッターを保護手袋せずに使用することがある","時間がかかる事が理由で、省略している作業がある"];
+   var ignore_advices=["守れないルール・SOPがある場合は、先ず上司へ相談せよ","労災が起きると自分だけでなく他の人も不幸になる。安全が最優先を心がけよ",
+    "作業エリア外は危険が高い、立ち入るな","SOPは安全を確実にするための手順。独自の方法では安全が抜けるリスクあり",
+    "何故複数人なのかを理解し、作業手順を遵守せよ","作業手順書が実作業に合っていないときは、まず上司に相談し作業手順書を修正せよ",
+    "ちょっとした手出しが災害を招く、設備を停止させて対応せよ","適正な治具・道具を使って作業せよ","NTカッターは原則使用禁止、刃物に触れる可能性が有る時はケブラー手袋を着用せよ",
+    "近道行為は厳禁、時間をかけても、安全を優先せよ"];
+
+   var no_awareness_check=["他の作業者がルール違反をしても、指導・注意出来ない","あいまいな指示を受けることが多い",
+   "ルール違反をしても注意されない","上司が理解していない作業がある","請負作業者は作業内容を理解していない事がある",
+   "新入社員の教育が不足している","決められた作業手順で行っていない人がいても注意しない","共同作業者の作業スキルを考えずに作業を行っている",
+   "作業指示書をよく確認していない","周知していない危険個所がある"];
+   var no_awareness_advices=["ルールは安全を確保するためにある事を認識し、違反を見つけたら他の作業者を守るために注意せよ",
+   "あいまいな指示を受けた時はそのままにせず、完全に理解できるまで内容確認せよ","ルール違反は事故を招く、自分だけでなく他人を守るため注意をしあう",
+   "作業内容はしっかり報連相","作業内容を理解していない人には、理解させた上で作業をさせよ","新入社員は危険を実感できない事が多い。何故SOPの手順であるか原理から説明せよ",
+   "ほんのちょっとの積み重ねが大きな事故を招く、決められた手順は遵守させよ","共同作業者の作業スキルを考え、スキルが低い人の動きも注意して作業せよ",
+   "作業指示書は、作業内容、安全、作業者のスキルを考慮して確認せよ","危険個所は関係者に周知せよ"];
+
+   var lack_of_knowledge_check=["今日行う作業のSOPを見たことが無い","今日の作業には慣れていない","十分な教育を受けずに行っている作業がある",
+   "新入社員の作業習熟度が不足している","作業に使用する道具についての知識はない","保護具の必要性が分からない作業がある",
+   "トラブルが起きた時の対応が分からない","作業で使用する機器には安全装置があり、安全が確保されているので危険はない",
+   "装置のどの部分が危険であるか認識していない","補修・工事等の際、建屋内のどこが立ち入り禁止か認識していない"];
+   var lack_of_knowledge_advices=["自己流で行っている作業には気がついていない危険あり。SOPを遵守せよ","不慣れな作業は助っ人を用意してから作業開始せよ",
+   "教育を受けていない作業は行わない","新入社員にはスキルチェックを確認の上、スキルに応じて作業を行う","作業に使用する道具についても機能を理解せよ",
+   "保護具の必要性についてSOP確認せよ","作業前にトラブル対応手順を確認せよ","動かないと思うものが、もし動いたらどうなるか想定、安全装置を過信しない",
+   "装置のどの部分に危険が潜んでいるか、仲間に確認してから作業せよ","通常作業時も含めて、建屋内の危険個所を認識して作業せよ"];
+  
+   var no_consciousness_check=["急いで作業を行うことが多い","動くと危険だが、普段動かないので直接触れている箇所がある",
+   "今日の作業で労災が起きるわけがない","終業間際は、慌てて作業をする事が多い","装置のどの部分が危険であるか認識していない",
+   "補修・工事等の際、建屋内のどこが立ち入り禁止か認識していない","昼食休憩間際は、慌てて作業をする事が多い",
+   "作業開始時、眠気がある状態で作業する事がある","挟まれる可能性がある箇所に手を入れていることがある",
+   "注意表示を見ない或いは、意識しないで作業している","終業間際は疲労して意識（覚醒）レベルが低下している（ぼーとしている）",
+   "体調が悪くても、無理して作業を行ってしまう"];
+   var no_consciousness_advices=["急いでいる時こそ作業手順・注意事項を理解せよ","動かないと思うものが、もし動いたらどうなるか想定、安全装置を過信しない","自分だけは大丈夫と思う事自体がリスクになる、仲間の安全も考えよう",
+   "慌てるときほど、一息入れて安全確認せよ","装置のどの部分に危険が潜んでいるか、仲間に確認してから作業せよ",
+   "通常作業時も含めて、建屋内の危険個所を認識して作業せよ","慌てるときほど、一息入れて安全確認せよ","眠気がある時は作業しない、準備体操をする等、眠気を覚ましてから作業しよう",
+   "重量物の下、設備の隙間ははさまれ危険個所であることを意識せよ","注意表示を風景にしない、指差しして自分の身を守ろう",
+   "疲労を感じるときは、小休憩を取って作業をしよう","体調が悪い時は無理をせず、休みを取ろう"];
+
+   var insensitive_check=["普段、共同作業者の状況を確認していない","共同作業者への合図が伝わらない事がよくある",
+   "必要な合図を忘れることがよくある","整理されていない資材・部品がある","細かい樹脂の散乱を放置する",
+   "道具を定位置でないところに置くことがある","立ち入り禁止区域を分かるように表示していない","作業エリアで、激突する可能性がある突起があるか気にしていない",
+   "注意表示が汚れていても放置している"];
+   var insensitive_advices=["共同作業者の安全も確保せよ","共同作業者と呼吸を合わせ合図を取り合おう",
+   "思い違いが事故を招く、合図は確実に伝えよ","整理できていない状態は自分だけでなく他の作業者にも危険を招く。直ちに整理せよ",
+   "整理整頓は安全の基本","道具は定位置管理せよ","立ち入り禁止区域は誰でも分かるようにせよ","作業エリアの突起等、普段から身の回りの危険源に留意しよう",
+   "注意表示は常に見えやすくせよ"];
+
+   var lack_of_interest_check=["生産がタイトでSOPの更新が遅れている","作業性が悪いとの理由で保護具着用が義務付けられていない作業がある",
+   "変更管理の確認事項に作業手順が抜けている","少頻度作業でSOPが作成されていない作業がある","生産がタイトで安全対策が後回しになっている",
+   "作業性が悪いとの理由で保護具着用が義務付けらていない作業がある","安全パトロールを手抜きしてしまうことがある",
+   "注意表示が汚れていても放置している事がある","足場が不安定な場所での作業がある"];
+   var lack_of_interest_advices=["まずは上司に相談し、仮の作業指示書を発行してもらう","まずは上司に相談し、安全最優先で作業方法の見直しをせよ",
+   "何かを変更するときは今までの作業手順でよいかも確認せよ","まずは上司に相談し、少頻度作業でも作業指示書或いはSOPを作成せよ",
+   "まずは上司に相談し、職場の安全を最優先してもらう","まずは上司に相談し、安全最優先で作業方法の見直しをせよ",
+   "安全パトロールは、設備の異常、人への危険を見出す、大切な労災予防活動である事を認識せよ","足場が不安定な場所での作業は見直しせよ",
+   "足場が不安定な場所での作業は見直しせよ"];
+
+   var without_permission_check=["作業変更の届出をしないで作業を行うことがある","指示書はある程度守れば、変更しても構わない",
+   "些細な作業変更は手間になるので連絡しないで済ませる","実は独自の作業方法がある","指示が曖昧な時は、作業内容を自由に変更できる",
+   "安全カバーは自由に開けて作業できる"];
+   var without_permission_advices=["作業変更の際は上司に報連相する","指示書からの変更がある場合は必ず届け出よ",
+   "自分にとって些細な変更でも他の人に影響する可能性あり。些細なことでも連絡・相談せよ","必要な変更は上司に相談。安全を評価の上変更せよ",
+   "指示が曖昧な時は、確実に理解できるまで内容確認せよ","安全カバーを開ける行為は、危険個所をむきだしにする事と認識せよ"];
+
+  //作業のチェックとKYアドバイス データ
+    var ii1=0;
+    var ii2=0;
+    var wk1=0;
+    var wk2=0;
+
+    var work = ["回転体近くでの作業","重量物の設置・移動","清掃作業","狭所での作業","動機器作動中の作業","刃物での作業","刃物の設置・移動"
+      ,"刃物近くでの作業","歩行","階段昇降","工具を使った作業","高所作業","サンダーによる作業","設備の点検","電源の差し込み","ドアの開閉",
+      "配管作業","リフトでの作業","ホース引き抜き","高温物近くでの作業"];
+    var work_check=[["本当は回転機器の危険性を認識できていない","ロールに触れる可能性はあるが効率が良い、独自の方法がある",
+    "回転中のロールに手出し清掃を行うことがある","回転速度が遅ければ、手で糸屑を除去しても大丈夫と思う","止め作業をすると機器は止まるが、惰性でどれだけ動くのか分からない",
+    "ラインを止めてからやり直すと時間や手間がかかるため、咄嗟に回転体に手を出すことがある","手が容易に入る構造の設備である",
+    "シャフトをセットする際、無理やり手でゆする或いは押し込む事がある","稼働中のロール間に清掃治具等を落としたら、咄嗟に治具を取る",
+    "通布作業の際、装置稼働開始する時に装置の中に人がいない事を確認していない","ロールの清掃作業は、ヘルメットを着用し回転を遅くして作業を行っているから安全",
+    "スタートアップでの通布作業の際、ワインダーのコアに自動的に巻付かなかった場合、専用の道具を使わず作業エリアでない所に侵入して対応することがある"],
+    ["ロール等のシャフトのチャックを閉める際、共同者業者の手が挟まれないか確認していない","サクションプレート等の重量物を移動させる際、作業経験が浅い人がいても気にしていない",
+    "再生ロール等を縦に重ねてを移動する際、置いた時に不安定な状態になっていないか確認していない","紙管交換等、複数人で行う慣れた作業は、それぞれが自分の作業だけしっかりやれば良い",
+    "通布用ウェブをクレーンで移動させる際、補助作業員に声掛けをせず作業を行っている","シャフトコア挿入装置等がトラブルを起こした時の対処法が分からない",
+    "クレーンで重量物を移動する際、挟まれる可能性がある箇所を意識していない","エンボス交換時等、重い部品の落下防止冶具を使用しないで作業することがある",
+    "製品用パレット等、重量物を手で移動させる際、足元を確認していない","紙管交換時等の際、シャフトが完全に閉となっている事を確認せず作業を行っている",
+    "シャフトをセットする際、無理やり手でゆする或いは押し込む事がある","ホイスト等で重量物を吊って移動させる際、無意識に重量物の下に手が入っていることがある",
+    "シャフトのチャックの開閉の構造を理解していない"],
+    ["MBダイの交換のためフラッシング作業を行った際等、床に樹脂片が散乱している事がある","排気ダクト等高所のでの清掃作業を、梯子を使って行う事がある",
+    "設備の押さえ板等を手で拭く際、特に何も気にしていない","ロールの清掃作業は、ヘルメットを着用し回転を遅くして作業を行っているから安全",
+    "清掃治具等をベルト等に落とした時、咄嗟に稼働中の装置に手を出すことがある"],
+    ["シャットダウン中、狭い装置内部で作業する際、ヘルメットは着用しない","ロールの清掃作業は、ヘルメットを着用し回転を遅くして作業を行っているから安全",
+    "クエンチチャンバーを閉じる作業等、体を前にかがめて作業する際、特に周りを気にしていない","通布作業等、狭いところでの作業が完了した後、元の位置に戻る際、特に何も気にしていない",
+    "設備の修理作業等、無理な体勢で作業を行うことがある"],
+    ["製品搬送のコンベアが定位置に停止しない等の異常が発生した際、設備を停止せずに対応する事がある","製品にシュリンクフィルム巻き付けて包装する作業の様に、足ふみスイッチでコンベアーテーブルを動かす時、何も意識しない",
+    "原反のスリット作業終了後、残反の処理方法が明確になっていない","設備稼働中の点検作業で、無意識に挟まれる可能性がある場所を触れてしまう事がある",
+    "シャフトのチャックの開閉の構造を理解していない","トラブル或いは誤操作で製品搬送で異常動作をした場合、咄嗟に製品に手を出して救済しようとする"],
+    ["ウエストエアガンに入っているフィラメントの処置等、ハサミで行う作業に危険は無い","作業で使用するハサミ等の刃物を、所定でない場所に仮置きして作業する事がある",
+    "ケブラ手袋を着用していれば切創には万全である"],
+    ["スリッターのカウンターナイフの交換時等、作業性の理由から保護手袋をしない事がある","スリット刃等に直接素手で触れて作業する事がある",
+    "スリッター等、刃物を有する装置に稼働している状態で触れる可能性がある作業がある","エレマ回収機等、装置内に刃物を有する設備の清掃作業等、保護手袋をせずに作業することがある",
+    "スリッターの刃の位置を調節する際、作業手順通りに行わず素手で調整することがある","スリッター刃の組替作業時、保護手袋を着用していれば切創は起きない",
+    "スリッター刃の近くに不織布片が付着した際、安全対策を行うと面倒なので、何も対策せず不織布片を除去することがある","スタートアップでの通布作業の際、ワインダーのコアに自動的に巻付かなかった場合、専用の道具を使わず作業エリアでない所に侵入して対応することがある",
+    "ケブラ手袋を着用していれば切創には万全である"],
+    ["スリッターのカウンターナイフの交換時等、作業性の理由から保護手袋をしない事がある","スリット刃等に直接素手で触れて作業する事がある",
+    "スリッター等、刃物を有する装置に稼働している状態で触れる可能性がある作業がある","エレマ回収機等、装置内に刃物を有する設備の清掃作業等、保護手袋をせずに作業することがある",
+    "スリッターの刃の位置を調節する際、作業手順通りに行わず素手で調整することがある","スリッター刃の組替作業時、保護手袋を着用していれば切創は起きない",
+    "スリッター刃の近くに不織布片が付着した際、安全対策を行うと面倒なので、何も対策せず不織布片を除去することがある","スタートアップでの通布作業の際、ワインダーのコアに自動的に巻付かなかった場合、専用の道具を使わず作業エリアでない所に侵入して対応することがある",
+    "ケブラ手袋を着用していれば切創には万全である"],
+    ["現場を歩くだけなら労災は起きない","シューズクリーナーの水分を十分拭き取らずに作業に入る事がある","プラント内を小走りで移動する事がある",
+    "排水ピット、溝で、普段蓋がされている所が解放状態になっていることがある","通路にちょっとした突起が合っても気にならない",
+    "通路でない近道を使う事がある","よそ見をして歩くことがある","通路に普段置いていないものがあっても気にしていない"],
+    ["事務所の屋外階段等、手すりを持たずに階段を昇り降りすることがある","荷物で両手が塞がった状態で階段を使うことがある",
+    "2,3段のステップを降りる時に危険は感じない","手すりを持っていれば、安全と思う","階段を駆け降りる或いは、一段飛ばしする事がある",
+    "梯子を下りる時、最終ステップに近づくと気が緩む","階段を昇り降りする時、自分が転倒することについて意識していない",
+    "自分は階段で労災にあうことはない","ステップのストッパー、階段の滑り止めが壊れていても気にならない"],
+    ["トルクレンチを使用している時、ボルトから突然外れ反動を受けた事がある","ノズル焼却準備作業等、固く締まったボルトを六角レンチで緩める時、パイプを柄につけて回すことがある",
+    "六角レンチ等を使った作業で、力を入れたときにスカされることがある","近くに専用の工具が無い時、代替できそうな道具で作業する事がある"],
+    ["排気ダクト等高所での清掃作業を、梯子を使って行う事がある","MBダイカセットとMBダイハンガーのアライメントの確認作業等、高い位置にある設備の確認作業で、設備の梁やダクト等に乗って作業することがある",
+    "キャスター付きの椅子等の上に乗って作業する事がある","高所(1m以上)且つ足場のない不安定な場所に上がっての作業がある"],
+    ["サンダーでの作業で、注意事項を認識せずに作業を行っている"],
+    ["サイロのレベル計等の点検の際、通電状態で感電する箇所に触れて作業している事がある","シャットダウン中、設備を点検する時、設備の運転状態を確認していないことがある"],
+    ["ギヤポンプ等の電気設備の再立ち上げを行う時、設備の配線・仕様を確認していない"],
+    ["勢いよくドアを開け閉めする事がある","閉まりかかったドアに急いで手をかけることがある","開け閉めに大きな力がいるドアがある"],
+    ["高温の液体等がどこの配管に通っているか把握せずに配管作業を行うことがある"],
+    ["フォークリフトから降りて作業をする際、フォークリフトの'つめ'を上げたまま作業する事がある","フォークリフトをバックさせるとき、後方確認せずにバックする事がある",
+    "パレットの置き場所を気にしていない"],
+    ["ペレット輸送ホースを引き抜く作業の際、力を入れないと抜けない"],
+    ["原料樹脂テスト機で、ストランド切れが発生した際、素手でストランド引きをしてラインに戻すことがある","高温の液体等がどこの配管に通っているか把握せずに配管作業を行うことがある"]];
+    
+    var KY_advices=[["回転機器は少しでも巻き込まれると体を破壊するまで動き続ける事を認識せよ","SOPは安全を確保するための教科書である事を認識して作業せよ",
+    "手出し作業は原則禁止、巻き込まれのリスクが高いことを認識せよ","速度が遅い機器に対する油断により、巻込まれが多く発生している事を認識せよ",
+    "多くの機器は瞬時に止まる事ができない事を認識せよ","手間がかかっても安全優先、咄嗟の行動は労災を招く事を認識せよ",
+    "手が容易に入る箇所がないか、今一度確認せよ","シャフトを無理やり手で作業すると、手や指を挟むリスクが高くなる。無理せず、設備担当者に相談せよ",
+    "咄嗟の行動は労災を招く、咄嗟に手が出そうな箇所を点検せよ","装置を稼働させるときは共同作業者が何処にいるか声掛け・確認せよ",
+    "ロールの清掃作業は原則設備停止して実施、ロール回転が遅くても、巻き込まれてヘルメットと共に頭を割った事例がある事を認識せよ",
+    "作業エリアでない所は想定していないリスク有り、適切な道具を使い、手順書を遵守して作業せよ"],
+    ["シャフトのチャックを閉めるときは共同作業者の状況を確認せよ","作業経験が浅い人には、作業の手順と挟まれの危険個所を周知せよ",
+    "重量物を不安定な状態で置くと転倒の危険あり、静置状態を確認せよ","二人以上での作業時は、「声を掛け合う」「相手の動きや状況を確認する」を習慣をつけよ",
+    "クレーン操作者と補助作業は常に声を掛け合って作業せよ","作業で使用する装置がトラブルを起こした時の対処法を確認せよ",
+    "クレーンを操作する際は、挟まれる可能性がある場所を意識せよ","設備の重い部品を取り外す作業の際には、落下防止治具を使用する等の対策をせよ",
+    "重量物を手で移動させる際は、転倒する可能性がある段差、突起物がないか確認せよ","紙管交換時等の際は、シャフトが閉となっている事を確認せよ",
+    "シャフトを無理やり手で作業すると、手や指を挟むリスクが高くなる。無理せず、設備担当者に相談せよ","重量物を吊って移動させる際は、手を挟まない位置で作業する事を意識せよ",
+    "シャフトとチャックに挟まれる事例が多いことを認識し、動作・構造を理解せよ"],
+    ["細かい樹脂片の上は滑りやすく、中には鋭利な樹脂片もあることを認識して作業せよ","高所の清掃作業においては、枠組み足場又はローディング足場を使用せよ",
+    "設備の一部にはバリがある可能性があることを認識し、バリを発見したら直ぐバリ取りせよ","ロールの清掃作業は原則設備停止して実施、ロール回転が遅くても、巻き込まれてヘルメットと共に頭を割った事例がある事を認識せよ",
+    "稼働中の装置には手をだすな、停止させてから対応せよ"],
+    ["狭い装置内部は突起物がある事を認識し、ヘルメットを着用せよ","ロールの清掃作業は原則設備停止して実施、ロール回転が遅くても、巻き込まれてヘルメットと共に頭を割った事例がある事を認識せよ",
+    "作業前に作業エリア周辺に突起物が無いか確認せよ","作業が完了しても気を緩めず、周りに突起物等ないか確認せよ","無理な体勢で行う作業には腰痛・骨折のリスク有り、準備運動と共に作業方法の見直しせよ"],
+    ["異常が発生した場合は、咄嗟に行動をせず、先ず設備を停止せよ","足ふみスイッチ等で装置を動かし始める前に、自分と共同作業者が安全な状態である事を確認せよ",
+    "残反の処理方法を確認し、明確でない場合は手順書で明確にせよ","点検作業中でも、動いたら挟まれる箇所に手や体が触れていないか意識せよ",
+    "シャフトとチャックに挟まれる事例が多いことを認識し、動作・構造を理解せよ","トラブル或いは誤操作で異常が発生した場合、落ち着いて設備を止めて対応せよ"],
+    ["ハサミを持って共同作業者に近づくと、相手を傷つける虞あり、ハサミも刃物である事を認識せよ","ハサミ等の刃物を一時的に使わない場合でも、所定の場に置くことを心がけよ",
+    "ケブラ手袋をしていても切創事故は起こる可能性がある事を認識せよ"],
+    ["刃物の交換時は、必ず保護手袋を着用せよ","刃物に少し触れただけでも切創災害に繋がる事を意識し、保護手袋を着用せよ",
+    "装置は確実に止め、保護手袋を着用して作業せよ","設備内の刃物に触れるかもしれないと意識し、適切な保護具を着用して作業せよ",
+    "近道行為は労災に繋がる事を認識し、作業手順を遵守せよ","保護手袋を着用していても、大きな力で刃に触れると切創に繋がることを認識し、油断せず作業せよ",
+    "これくらいなら問題ないと思う事が労災を招く事を認識し、安全対策を行った上で対応せよ","作業エリアでない所は想定していないリスク有り、適切な道具を使い、手順書を遵守して作業せよ",
+    "ケブラ手袋をしていても切創事故は起こる可能性がある事を認識せよ"],
+    ["刃物の交換時は、必ず保護手袋を着用せよ","刃物に少し触れただけでも切創災害に繋がる事を意識し、保護手袋を着用せよ",
+    "装置は確実に止め、保護手袋を着用して作業せよ","設備内の刃物に触れるかもしれないと意識し、適切な保護具を着用して作業せよ",
+    "近道行為は労災に繋がる事を認識し、作業手順を遵守せよ","保護手袋を着用していても、大きな力で刃に触れると切創に繋がることを認識し、油断せず作業せよ",
+    "これくらいなら問題ないと思う事が労災を招く事を認識し、安全対策を行った上で対応せよ","作業エリアでない所は想定していないリスク有り、適切な道具を使い、手順書を遵守して作業せよ",
+    "ケブラ手袋をしていても切創事故は起こる可能性がある事を認識せよ"],
+    ["床が滑りやすい状態となっていると早歩きでも転倒事故に繋がる、滑りやすい箇所が無いか確認せよ","靴の裏に水分が残っていると滑りやすくなるので、十分に拭き取る",
+    "小走りでの移動は転倒・衝突の危険有り、急いでいても、落ち着いて歩行せよ","ピットや溝の蓋を開けた状態にする必要が有る時は、落下防止策等の対策をせよ",
+    "ちょっとした突起でも転倒の危険あり、突起は無くすよう対策せよ","通路以外は原則通行禁止、転倒・激突の危険がある事を認識せよ",
+    "製造現場には危険が潜んでいる事を意識し、目の前、足元、頭上に注意して歩行せよ","通路に物を置くと躓く危険あり。作業動線に干渉する場合は、その場所に注意喚起の表示をせよ"],
+    ["階段での労災が多いことを意識し、手すりは必ず持つ","階段を使うときは、無理に荷物を持たず、手すりを持てるように、少なくとも片手はフリーの状態とせよ",
+    "2,3段のステップでも足を踏み外す危険有り、足元を注意せよ","手すりを持っていても、足を踏み外すと怪我をする危険あり、特に降りるときは注意せよ",
+    "急いでいても、階段は駆け降りず、1段づつ正しく使用せよ","梯子を下りる際は、地面に降りるまで気を緩めない","階段を使う時は足元の段差に注意し、手すりを必ず持って昇降せよ",
+    "階段での転倒が多いことを意識し、油断せず足もとを注意、３点支持（手摺持ち）せよ","ステップのストッパー、階段の滑り止めに異常が有る時は、転落等の危険があるため直ぐに修理せよ"],
+    ["ボルトの変形、レンチヘッドの損傷が無いか確認せよ","六角レンチの柄にパイプを組み合わせてネジを緩める作業は禁止。トルクレンチ或いは柄の長いものを使用し、スカされない様注意せよ",
+    "六角レンチがボルトに適切に挿入した事を確認してから、ボルトを緩めよ","専用でない工具を使うと、設備の破損だけでなく、予期せぬ労災が発生する危険あり、適切な工具を使用せよ"],
+    ["高所の清掃作業においては、枠組み足場又はローディング足場を使用せよ","設備の梁、ダクト等は作業するために設計されていないため転落、踏み外しのリスク有り、専用の踏み台等の検討をせよ",
+    "不安定な物の上で作業は厳禁、専用の踏み台を使用せよ","高所(1m以上)且つ足場のない場所での作業は転落のリスク高い、作業法・設備を改善せよ"],
+    ["サンダーの持ち方、力の入れ方を再確認、ワークを万力・クランプで、作業台に固定せよ、また皮手袋等の滑り難い保護手袋、通し面を着用せよ"],
+    ["レベル計等、感電する可能性がある箇所を認識して作業せよ","設備を点検する時は、元電源を遮断し、運転状態を確認せよ"],
+    ["電気設備の再立ち上げを行う時は、設備の配線・仕様を確認し、地絡等が発生しないように注意せよ"],
+    ["衝突、挟まれのリスク有り、ドアはゆっくり開け閉めせよ","閉まりかけのドアは挟まれのリスク有り、一旦ドアが閉まってから開けよ",
+    "開け閉めが難しいドアは、衝突、挟まれのリスク有り、改善せよ"],
+    ["配管作業を行うときは、高温の液体等の配管を把握し、縁切りを行って作業せよ"],
+    ["フォークリフトの'つめ'を上げたままにすると躓きの危険がある事を認識せよ","フォークリフトでバックする時は、必ず後方確認せよ",
+    "フォークリフトでの作業でパレットに躓くことが多いことを認識し、パレットの置き場所を最適化せよ"],
+    ["無理に力を入れてホースを引き抜く作業は、周りの設備との激突の危険あり、ホース接続方法を見直しせよ"],
+    ["ストランド切れの時は、ストランド引きを行なわない、SOPを遵守して作業せよ、併せて、適切な保護具を検討せよ","配管作業を行うときは、高温の液体等の配管を把握し、縁切りを行って作業せよ"]];
+
+  //初期表示
+   //意識のチェック
+   var ntl= no_thinking_check.length; 
+   var nt=Math.floor(Math.random()*ntl); 
+    document.getElementById("no_thinking").innerHTML = '無考:' + no_thinking_check[nt];
+ 
+   var rl= reckless_check.length; 
+   var rec=Math.floor(Math.random()*rl); 
+    document.getElementById("reckless").innerHTML = '無謀:' + reckless_check[rec];
+  
+   var il= ignore_check.length; 
+   var ign=Math.floor(Math.random()*il); 
+    document.getElementById("ignore").innerHTML = '無視:' + ignore_check[ign];
+
+   var nal= no_awareness_check.length; 
+   var noa=Math.floor(Math.random()*nal); 
+    document.getElementById("no_awareness").innerHTML = '無自覚:' + no_awareness_check[noa];
+  
+   var lal= lack_of_knowledge_check.length; 
+   var lac=Math.floor(Math.random()*lal); 
+    document.getElementById("lack_of_knowledge").innerHTML = '無知:' + lack_of_knowledge_check[lac];
+  
+   var nol= no_consciousness_check.length; 
+   var noc=Math.floor(Math.random()*nol); 
+    document.getElementById("no_consciousness").innerHTML = '無意識:' + no_consciousness_check[noc];
+   
+   var inl= insensitive_check.length;
+   var ins=Math.floor(Math.random()*inl);
+    document.getElementById("insensitive").innerHTML = '無神経:' + insensitive_check[ins];
+  
+   var lol= lack_of_interest_check.length;
+   var loi=Math.floor(Math.random()*lol);
+    document.getElementById("lack_of_interest").innerHTML = '無関心:' + lack_of_interest_check[loi];
+
+   var wil= without_permission_check.length;
+   var wit=Math.floor(Math.random()*wil);
+    document.getElementById("without_permission").innerHTML = '無許可:' + without_permission_check[wit];
+
+   //作業のチェック
+    document.getElementById("work1_check").innerHTML = work[0] + ':' + work_check[0][0];
+    document.getElementById("work2_check").innerHTML = work[0] + ':' + work_check[0][1];
+    var photoElement1 = document.getElementById('photo1');
+    var photoElement2 = document.getElementById('photo2');
+  
+  //工程・作業変更
+    form.addEventListener('change', changed);
+    function changed(){
+      var work1 = document.getElementById("work1").value;
+      var work2 = document.getElementById("work2").value;
+
+      var check1_items= work_check[work1];
+      var l1=work_check[work1].length;
+      var i1=Math.floor(Math.random() * l1);
+      wk1=work1;
+      ii1=i1;
+
+      var check2_items= work_check[work2];
+      var l2=work_check[work2].length;
+      var i2=Math.floor(Math.random() * l2);
+      wk2=work2;
+      ii2=i2;
+
+      document.getElementById("work1_check").innerHTML = work[work1] + ':'+ check1_items[i1];
+      document.getElementById("work2_check").innerHTML = work[work2] + ':'+ check2_items[i2];
+    };
+
+  //チェックスタート　クリック後の処理
+   //KYアドバイス表示
+    button.addEventListener('click', getValue);
+    function getValue(){
+      document.getElementById("no_thinking").innerHTML = 'KYアドバイス:'+ no_thinking_advices[nt];
+      document.getElementById("reckless").innerHTML = 'KYアドバイス:' + reckless_advices[rec];
+      document.getElementById("ignore").innerHTML = 'KYアドバイス:' + ignore_advices[ign];
+      document.getElementById("no_awareness").innerHTML = 'KYアドバイス:' + no_awareness_advices[noa];
+      document.getElementById("lack_of_knowledge").innerHTML = 'KYアドバイス:' + lack_of_knowledge_advices[lac];
+      document.getElementById("no_consciousness").innerHTML = 'KYアドバイス:' + no_consciousness_advices[noc];
+      document.getElementById("insensitive").innerHTML = 'KYアドバイス:' + insensitive_advices[ins];
+      document.getElementById("lack_of_interest").innerHTML = 'KYアドバイス:' + lack_of_interest_advices[loi];
+      document.getElementById("without_permission").innerHTML = 'KYアドバイス:' + without_permission_advices[wit];
+ 
+      document.getElementById("work1_check").innerHTML = work[wk1] + 'のKYアドバイス:'+ KY_advices[wk1][ii1];
+      document.getElementById("work2_check").innerHTML = work[wk2] + 'のKYアドバイス:'+ KY_advices[wk2][ii2];
+    
+   //労災情報の表示
+      var photoElement1 = document.getElementById('photo1');
+      var textElement1 = document.getElementById('text1');
+      var photoElement2 = document.getElementById('photo2');
+      var textElement2 = document.getElementById('text2');
+
+      var process = document.getElementById("process").value;
+      var work1 = document.getElementById("work1").value;
+      var work2 = document.getElementById("work2").value;
+      
+      if (work1==0){
+        wk1n=38;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==1){
+        wk1n=43;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==2){
+        wk1n=5;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==3){
+        wk1n=7;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==4){
+        wk1n=13;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==5){
+        wk1n=20;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==6){
+        wk1n=7;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==7){
+        wk1n=11;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==8){
+        wk1n=7;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==9){
+        wk1n=7;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==10){
+        wk1n=12;
+        wk1r=Math.floor(Math.random() * wk1n);
+      } else if(work1==11){
+        wk1n=4;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_1"
+      } else if(work1==12){
+        wk1n=1;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_2"
+      } else if(work1==13){
+        wk1n=1;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_3"
+      } else if(work1==14){
+        wk1n=1;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_4"
+      } else if(work1==15){
+        wk1n=1;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_5"
+      } else if(work1==16){
+        wk1n=1;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_6"
+      } else if(work1==17){
+        wk1n=6;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_7"
+      } else if(work1==18){
+        wk1n=1;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_8"
+      } else if(work1==19){
+        wk1n=2;
+        wk1r=Math.floor(Math.random() * wk1n);
+        work1="1_9"
+      }
+
+      var photo1 = 'Reports/'+ work1 + wk1r +'.jpg';
+      var text1 = 'Reports/'+ work1 + wk1r +'.txt';
+
+      if (work2==0){
+        wk2n=38;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==1){
+        wk2n=43;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==2){
+        wk2n=5;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==3){
+        wk2n=7;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==4){
+        wk2n=13;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==5){
+        wk2n=20;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==6){
+        wk2n=7;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==7){
+        wk2n=11;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==8){
+        wk2n=7;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==9){
+        wk2n=7;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==10){
+        wk2n=12;
+        wk2r=Math.floor(Math.random() * wk2n);
+      } else if(work2==11){
+        wk2n=4;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_1"
+      } else if(work2==12){
+        wk2n=1;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_2"
+      } else if(work2==13){
+        wk2n=1;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_3"
+      } else if(work2==14){
+        wk2n=1;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_4"
+      } else if(work2==15){
+        wk2n=1;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_5"
+      } else if(work2==16){
+        wk2n=1;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_6"
+      } else if(work2==17){
+        wk2n=6;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_7"
+      } else if(work2==18){
+        wk2n=1;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_8"
+      } else if(work2==19){
+        wk2n=2;
+        wk2r=Math.floor(Math.random() * wk2n);
+        work2="1_9"
+      }
+      
+      var photo2 = 'Reports/'+ work2 + wk2r +'.jpg';
+      var text2 = 'Reports/'+ work2 + wk2r +'.txt';
+
+      photoElement1.src=photo1;
+      textElement1.src=text1;
+      photoElement2.src=photo2;
+      textElement2.src=text2;
+    
+    //意識グラフ表示
+     //選択データ取得
+    var data1;
+    var ele = document.getElementsByName('radio1');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data1=ele[i].value;
+      }
+     };
+
+    var data2;
+    var ele = document.getElementsByName('radio2');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data2=ele[i].value;
+      }
+     };
+
+    var data3;
+    var ele = document.getElementsByName('radio3');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data3=ele[i].value;
+      }
+     };
+
+    var data4;
+    var ele = document.getElementsByName('radio4');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data4=ele[i].value;
+      }
+     };
+
+    var data5;
+    var ele = document.getElementsByName('radio5');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data5=ele[i].value;
+      }
+     }; 
+
+    var data6;
+    var ele = document.getElementsByName('radio6');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data6=ele[i].value;
+      }
+     };
+
+    var data7;
+    var ele = document.getElementsByName('radio7');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data7=ele[i].value;
+      }
+     };
+
+    var data8;
+    var ele = document.getElementsByName('radio8');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data8=ele[i].value;
+      }
+     };
+
+    var data9;
+    var ele = document.getElementsByName('radio9');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data9=ele[i].value;
+      }
+     };
+
+    var data10;
+    var ele = document.getElementsByName('radio10');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data10=ele[i].value;
+      }
+     };
+    
+    var data11;
+    var ele = document.getElementsByName('radio11');
+     for(i = 0; i < ele.length; i++) {
+      if(ele[i].checked) {
+      data11=ele[i].value;
+      }
+     };
+    
+     //グラフの設定
+    data = [data1,data2,data3,data4,data5,data6,data7,data8,data9,data10,data11];
+    const ctx = document.getElementById('radar-chart').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['無考', '無謀', '無視', '無自覚', '無知', '無意識', '無神経', '無関心', '無許可', work[wk1], work[wk2]],
+          datasets: [{
+            label: 'リスクの大きさ',
+            data: data,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          scale: {
+            ticks: {
+              beginAtZero: true,
+						min: 0,
+						max: 5,
+						stepSize: 1
+            }
+          }
+        }
+      });
+    
+    }
+
+  </script>
+</html>
